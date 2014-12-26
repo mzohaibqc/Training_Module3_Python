@@ -2,6 +2,8 @@
 """
 import urllib3
 
+""" Search Module
+"""
 from bs4 import BeautifulSoup
 from fuzzywuzzy import fuzz
 
@@ -35,16 +37,16 @@ def search():
         print('Headings from https://news.ycombinator.com/')
         print('===========================================')
         for line in ycombinator_soup.find_all('td', {'class': "title"}):
-            a = line.find('a')
-            if a is not None:
-                if words in a.string.lower():
-                    print('     {}'.format(a.string))
+            anchor = line.find('a')
+            if anchor is not None:
+                if words in anchor.string.lower():
+                    print('     {}'.format(anchor.string))
                     count2 += 1
-                elif fuzz.token_set_ratio(words, a.string) > 50:
-                    print('     {}'.format(a.string))
+                elif fuzz.token_set_ratio(words, anchor.string) > 50:
+                    print('     {}'.format(anchor.string))
                     count2 += 1
-                elif fuzz.ratio(words, a.string) > 50:
-                    print('     {}'.format(a.string))
+                elif fuzz.ratio(words, anchor.string) > 50:
+                    print('     {}'.format(anchor.string))
                     count2 += 1
         if count2 == 0:
             print('No heading found ')
@@ -52,3 +54,4 @@ def search():
 
 if __name__ == '__main__':
     search()
+
